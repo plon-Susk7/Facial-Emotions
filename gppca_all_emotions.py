@@ -4,16 +4,6 @@ import numpy as np
 from statsmodels.multivariate.factor_rotation import rotate_factors
 import os
 
-
-
-
-
-
-
-
-
-
-
 def preprocess_data(data,emotions):
     '''
     Function to preprocess the data as per the emotions
@@ -38,10 +28,6 @@ def preprocess_data(data,emotions):
             preprocessed_data[emotion][key] = dataPoints
 
     return preprocessed_data
-
-
-
-
 
 
 def main():
@@ -74,8 +60,5 @@ def main():
         plotHeatMap(rotated_loadings,ckplus.columns[:-1],emotion,'all')
 
         
-
-
-
 if __name__ == "__main__":
     main()
