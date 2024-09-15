@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from statsmodels.multivariate.factor_rotation import rotate_factors
 from scipy.stats import norm
+import os
 
 def GeneralizedPPCA(all_data):
     """
@@ -82,11 +83,15 @@ def getLoadings(w,v):
     '''
     return np.array([np.sqrt(val) * w[:, i] for i, val in enumerate(v) if val > 0])
 
-def plotHeatMap(rotated_loadings, columns,emotion,dataset_flag):
+def plotHeatMap(rotated_loadings, columns,emotion,dataset_flag,dataset):
     '''
         Plots the heatmap of the rotated loadings.
         Takes two arguments rotated loadings and the filtered dataframe
     '''
+    results_dir = 'results'
+    if dataset not in os.listdir(results_dir):
+        os.mkdir(f'results/{dataset}')
+
     plt.figure(figsize=(10, 8))
     sns.heatmap(
         rotated_loadings, 
@@ -98,7 +103,7 @@ def plotHeatMap(rotated_loadings, columns,emotion,dataset_flag):
         yticklabels=columns
     )
     plt.title('Heatmap from Rotated Loadings')
-    plt.savefig(f'results/heatmap_{emotion}_{dataset_flag}.png')
+    plt.savefig(f'results/{dataset}/heatmap_{emotion}_{dataset_flag}.png')
     # plt.show()
     
 
