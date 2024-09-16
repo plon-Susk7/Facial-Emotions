@@ -79,7 +79,7 @@ def varimax(Phi, gamma = 1.0, q = 20, tol = 1e-6):
 
 def getLoadings(w,v,varianceExplained=0.95):
     '''
-        Takes two arguments eigenvectors and eigenvalues and returns the loadings
+        Takes two arguments eigenvectors, eigenvalues and varianceExplained to returns the loadings
     '''
     eig_vals = [x for x in v if x > 0]
     n = len(eig_vals)
