@@ -28,7 +28,7 @@ def main():
 
             gppcaFeader = {'data1' : filtered_df1.to_numpy(),'data2' : filtered_df2.to_numpy()}
             w,v = GeneralizedPPCA(gppcaFeader)
-            loadings = getLoadings(w,v)
+            loadings = getLoadings(w,v,1)
             rotated_loadings, _ = rotate_factors(loadings.T, 'varimax')
             plotHeatMap(rotated_loadings,ckplus.columns[:-1],emotion,'single',key)
 

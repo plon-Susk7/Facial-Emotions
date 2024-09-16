@@ -77,11 +77,18 @@ def varimax(Phi, gamma = 1.0, q = 20, tol = 1e-6):
         if d/d_old < tol: break
     return dot(Phi, R)
 
-def getLoadings(w,v):
+def getLoadings(w,v,varianceExplained=0.95):
     '''
         Takes two arguments eigenvectors and eigenvalues and returns the loadings
     '''
-    return np.array([np.sqrt(val) * w[:, i] for i, val in enumerate(v) if val > 0])
+    eig_vals = [x for x in v if x > 0]
+    n = len(eig_vals)
+    total = sum(eig_vals)
+    var_exp = [ (i/total)*100  for i in sorted(eig_vals,reverse=True)]
+    cum_var_exp = np.cumsum(var_exp)
+    maxIndex = np.searchsorted(cum_var_exp, varianceExplained * 100, side='right')
+    loadings =  np.array([np.sqrt(val) * w[:, i] for i, val in enumerate(v) if val > 0])
+    return loadings[:maxIndex+1]
 
 def plotHeatMap(rotated_loadings, columns,emotion,dataset_flag,dataset):
     '''
