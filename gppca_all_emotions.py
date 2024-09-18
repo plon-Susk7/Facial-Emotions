@@ -57,7 +57,7 @@ def main():
         rotated_loadings, _ = rotate_factors(loadings.T, 'varimax')
     
         print(rotated_loadings.shape)
-        plotHeatMap(rotated_loadings,ckplus.columns[:-1],emotion,'all')
+        plotHeatMap(rotated_loadings,ckplus.columns[:-1],emotion,'all','all')
 
         
 if __name__ == "__main__":
