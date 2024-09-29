@@ -8,6 +8,7 @@ from statsmodels.multivariate.factor_rotation import rotate_factors
 from scipy.stats import norm
 import os
 
+
 def GeneralizedPPCA(all_data):
     """
     Input: dict of key:data (ndarray) pairs

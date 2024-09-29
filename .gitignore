@@ -1,3 +1,5 @@
 ./myenv/
 ./au_dataset/
 ./__pycache__/
+landmark/data/
+landmark/__pycache__/
