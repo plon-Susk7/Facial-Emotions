@@ -45,19 +45,22 @@ def main():
     # print([x for x in allData["ckplus"]['filename'].str.endswith("ANG.csv") if x==True])
 
     preprocessedData = preprocess_data(allData,emotions)
-
+    threshold=0.5
+    varianceExplained=0.95
     # Applying Generalized PPCA and plot data
     for emotion in emotions:
         print(f"Emotion: {emotion}")
         all_data = preprocessedData[emotion]
 
-        print(all_data['ckplus'].shape)
+        # print(all_data['ckplus'].shape)
         w,v = GeneralizedPPCA(all_data)
-        loadings = getLoadings(w,v)
+        loadings = getLoadings(w,v,varianceExplained)
         rotated_loadings, _ = rotate_factors(loadings.T, 'varimax')
     
-        print(rotated_loadings.shape)
-        plotHeatMap(rotated_loadings,ckplus.columns[:-1],emotion,'all')
+        # print(rotated_loadings.shape)
+        plotHeatMap(rotated_loadings,ckplus.columns[:-1],emotion,'all','all')
+        getRowsWithExtremeValues(rotated_loadings, ckplus.columns[:-1], threshold)
+        plotHeatMapWithRowAnnotations(rotated_loadings, ckplus.columns[:-1], emotion, 'single', 'all', threshold)
 
         
 if __name__ == "__main__":

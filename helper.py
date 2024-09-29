@@ -179,5 +179,63 @@ def plotGaussianCurve(data_map, au):
     # Display the plot
     plt.show()
     
-        
+def getRowsWithExtremeValues(rotated_loadings, columns, threshold=0.5):
+    extreme_rows = []
+    for i, row in enumerate(rotated_loadings):
+        extreme_values = [(val, idx) for idx, val in enumerate(row) if val > threshold or val < -threshold]
+        if extreme_values:
+            print(f"{columns[i]} : ",end="")
+            for val, idx in extreme_values:
+                print(f"{val:.2f}",end=', ')
+            print()
+            extreme_rows.append(columns[i])
+
+    return extreme_rows
+
+def plotHeatMapWithRowAnnotations(rotated_loadings, columns, emotion, dataset_flag, dataset, threshold=0.5):
+    '''
+    Plots the heatmap of the rotated loadings and annotates rows with values greater than the threshold or less than -threshold.
+    
+    Parameters:
+    - rotated_loadings: The matrix of rotated loadings (numpy array).
+    - columns: The row names (typically the Action Units).
+    - emotion: The emotion for which the heatmap is plotted.
+    - dataset_flag: Indicates the type of dataset for labeling.
+    - dataset: The dataset name (used for saving the plot).
+    - threshold: The threshold to consider for extreme values (default is 0.5).
+    '''
+    results_dir = 'results'
+    if dataset not in os.listdir(results_dir):
+        os.mkdir(f'results/{dataset}')
+
+    # Create the heatmap
+    plt.figure(figsize=(12, 8))  # Adjusted size to make room for text annotations
+    sns.heatmap(
+        rotated_loadings, 
+        annot=True, 
+        fmt=".2f", 
+        cmap='viridis', 
+        cbar=True, 
+        linecolor='gray', 
+        yticklabels=columns
+    )
+    
+    # Find rows that have values greater than the threshold or less than -threshold
+    annotated_rows = []
+    for i, row in enumerate(rotated_loadings):
+        if np.any(row > threshold) or np.any(row < -threshold):
+            annotated_rows.append(columns[i])
+    
+    # Add the annotated rows to the right of the heatmap
+    plt.text(len(rotated_loadings[0]) + 1, 0.5,  # Position the text to the right of the heatmap
+             '\n'.join(annotated_rows),  # List rows from top to bottom
+             fontsize=12, va='top', ha='left')
+
+    plt.title(f'Heatmap with Row Annotations ({emotion})')
+    
+    # Save the plot with the annotated rows
+    plt.savefig(f'results/{dataset}/heatmap_{emotion}_{dataset_flag}_annotated.png', bbox_inches='tight')
+    # plt.show()
+
+
     
