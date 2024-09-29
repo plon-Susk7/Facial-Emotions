@@ -14,10 +14,12 @@ def main():
     radboud = pd.read_csv("au_dataset/results_radboud.csv")
 
     # Preprocessing the data
-    emotions = ["ANG","SAD","FER","SUR"]
+    emotions = ["ANG","SAD","FER","SUR",'HPY']
     allData = {"ckplus":ckplus,"iim":iim,"jaffe":jaffe,"nimstim":nimstim,"radboud":radboud} ### Need to parameter to fiddle this, maybe add or delete few datasets
-
+    threshold=0.25
+    varianceExplained=0.95
     for emotion in emotions:
+        extreme_rows_per_dataset={}
         for key in allData.keys():
             print(f"Emotion: {emotion} Dataset: {key}")
             df = allData[key]
@@ -28,9 +30,17 @@ def main():
 
             gppcaFeader = {'data1' : filtered_df1.to_numpy(),'data2' : filtered_df2.to_numpy()}
             w,v = GeneralizedPPCA(gppcaFeader)
-            loadings = getLoadings(w,v,1) # getLoadings(w,v,variance_explained)
+            loadings = getLoadings(w,v,varianceExplained) # getLoadings(w,v,variance_explained)
             rotated_loadings, _ = rotate_factors(loadings.T, 'varimax')
             plotHeatMap(rotated_loadings,ckplus.columns[:-1],emotion,'single',key)
+            extreme_rows = getRowsWithExtremeValues(rotated_loadings, ckplus.columns[:-1], threshold)
+            extreme_rows_per_dataset[key] = set(extreme_rows)
+
+            plotHeatMapWithRowAnnotations(rotated_loadings, ckplus.columns[:-1], emotion, 'single', key, threshold)
+
+        # Find common extreme rows across all datasets for this emotion
+        common_extreme_rows = set.intersection(*extreme_rows_per_dataset.values())
+        print(f"Common extreme rows for emotion {emotion}: {common_extreme_rows}")
 
 
 if __name__ == "__main__":
