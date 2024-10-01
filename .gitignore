@@ -2,4 +2,8 @@
 ./au_dataset/
 ./__pycache__/
 landmark/data/
+landmark/IIM_GScale_Imgs
+landmark/jaffe_preprocessed_S
+landmark/nimstim_emotionFolder
+landmark/Radboud_images
 landmark/__pycache__/
