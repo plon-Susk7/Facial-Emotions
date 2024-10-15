@@ -26,7 +26,7 @@ def getLandmarkPoints(image_path):
             for idx, landmark in enumerate(face_landmarks.landmark):
                 # Print the landmark index and its coordinates (x, y, z)
                 
-                results.append([landmark.x,landmark.y,landmark.z])
+                results.append([landmark.x,landmark.y])
     else:
         print("No landmarks detected.")
 

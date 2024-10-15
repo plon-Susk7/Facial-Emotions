@@ -7,9 +7,9 @@ mp_face_mesh = mp.solutions.face_mesh
 face_mesh = mp_face_mesh.FaceMesh()
 
 # Your specific landmark points
-landmark_indices = [22, 55, 94, 104, 292, 293, 307, 309, 324, 346, 353, 367, 376, 408, 409, 410, 416, 448, 455]
+landmark_indices = [1,168,205,425,10,190,414,162,389,152]
 # Read the image file
-image_path = 'iim_sample_nut.jpg'  # Provide the path to your image
+image_path = 'iim_nut.jpg'  # Provide the path to your image
 image = cv2.imread(image_path)
 
 # Convert BGR image to RGB for processing
@@ -22,7 +22,7 @@ if result.multi_face_landmarks:
             h, w, _ = image.shape
 
             # Get the position of the landmark
-            lm = face_landmarks.landmark[idx-1]
+            lm = face_landmarks.landmark[idx]
             x, y = int(lm.x * w), int(lm.y * h)
 
             # Color the landmark point (e.g., red)
