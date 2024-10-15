@@ -1,8 +1,34 @@
 import cv2
 import mediapipe as mp
 import os
+import numpy as np
 
+def affine_trans(kp, data_name=None, matrix=None):
 
+    '''
+    # 162 -> 300,900
+    # 190 -> 600,1000
+    414 -> 800,1000
+    # 168 -> 700,900
+    # 10 -> 700, 1300
+    # 1 -> 700, 600
+    205 -> 500, 600
+    425 -> 900, 600
+    # 152 -> 500. 100
+'''
+
+    src = np.float32([kp[1], kp[10], kp[152], kp[162], kp[168], kp[190], kp[205], kp[425], kp[414]])
+    dst = np.float32([[700,600], [700, 1300], [500, 100], [300, 900],[700,900],[600,1000],[500,600],[900,600],[800,1000]])
+    
+    src_h = np.concatenate((src.T, np.ones(src.shape[0]).reshape(1,src.shape[0])), axis=0)
+    dst_h = np.concatenate((dst.T, np.ones(dst.shape[0]).reshape(1,dst.shape[0])), axis=0)
+    
+    kp_h = np.concatenate((kp.T, np.ones(kp.shape[0]).reshape(1,kp.shape[0])), axis=0)
+    
+    if matrix is None: matrix = dst_h@np.linalg.pinv(src_h)
+    kp_h = matrix@kp_h
+    
+    return matrix, kp_h[:2, :].T
 
 def getLandmarkPoints(image_path):
     # Initialize MediaPipe Face Mesh
