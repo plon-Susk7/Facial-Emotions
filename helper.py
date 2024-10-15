@@ -15,9 +15,11 @@ def GeneralizedPPCA(all_data):
 
     Returns PPCA weights across all data matrices stored in the input dict
     """
-    action_units = [' AU01_r', ' AU02_r', ' AU04_r', ' AU05_r', ' AU06_r', ' AU07_r',
-       ' AU09_r', ' AU10_r', ' AU12_r', ' AU14_r', ' AU15_r', ' AU17_r',
-       ' AU20_r', ' AU23_r', ' AU25_r', ' AU26_r', ' AU45_r']
+    # action_units = [' AU01_r', ' AU02_r', ' AU04_r', ' AU05_r', ' AU06_r', ' AU07_r',
+    #    ' AU09_r', ' AU10_r', ' AU12_r', ' AU14_r', ' AU15_r', ' AU17_r',
+    #    ' AU20_r', ' AU23_r', ' AU25_r', ' AU26_r', ' AU45_r']
+
+    action_units = [i for i in range(1,469)]
     for key in all_data.keys():
         d = all_data[key]
         assert np.isnan(d).sum() == 0
@@ -96,11 +98,11 @@ def plotHeatMap(rotated_loadings, columns,emotion,dataset_flag,dataset):
         Plots the heatmap of the rotated loadings.
         Takes two arguments rotated loadings and the filtered dataframe
     '''
-    results_dir = 'results'
+    results_dir = 'results_landmark'
     if dataset not in os.listdir(results_dir):
-        os.mkdir(f'results/{dataset}')
+        os.mkdir(f'results_landmark/{dataset}')
 
-    plt.figure(figsize=(10, 8))
+    plt.figure(figsize=(100, 80))
     sns.heatmap(
         rotated_loadings, 
         annot=True, 
@@ -111,7 +113,7 @@ def plotHeatMap(rotated_loadings, columns,emotion,dataset_flag,dataset):
         yticklabels=columns
     )
     plt.title('Heatmap from Rotated Loadings')
-    plt.savefig(f'results/{dataset}/heatmap_{emotion}_{dataset_flag}.png')
+    plt.savefig(f'results_landmark/{dataset}/heatmap_{emotion}_{dataset_flag}.png')
     # plt.show()
     
 
@@ -190,7 +192,7 @@ def getRowsWithExtremeValues(rotated_loadings, columns, threshold=0.5):
                 print(f"{val:.2f}",end=', ')
             print()
             extreme_rows.append(columns[i])
-
+    print([int(x) for x in extreme_rows])
     return extreme_rows
 
 def plotHeatMapWithRowAnnotations(rotated_loadings, columns, emotion, dataset_flag, dataset, threshold=0.5):
@@ -205,12 +207,12 @@ def plotHeatMapWithRowAnnotations(rotated_loadings, columns, emotion, dataset_fl
     - dataset: The dataset name (used for saving the plot).
     - threshold: The threshold to consider for extreme values (default is 0.5).
     '''
-    results_dir = 'results'
+    results_dir = 'results_landmark'
     if dataset not in os.listdir(results_dir):
-        os.mkdir(f'results/{dataset}')
+        os.mkdir(f'results_landmark/{dataset}')
 
     # Create the heatmap
-    plt.figure(figsize=(12, 8))  # Adjusted size to make room for text annotations
+    plt.figure(figsize=(100, 80))  # Adjusted size to make room for text annotations
     sns.heatmap(
         rotated_loadings, 
         annot=True, 
@@ -235,7 +237,7 @@ def plotHeatMapWithRowAnnotations(rotated_loadings, columns, emotion, dataset_fl
     plt.title(f'Heatmap with Row Annotations ({emotion})')
     
     # Save the plot with the annotated rows
-    plt.savefig(f'results/{dataset}/heatmap_{emotion}_{dataset_flag}_annotated.png', bbox_inches='tight')
+    plt.savefig(f'results_landmark/{dataset}/heatmap_{emotion}_{dataset_flag}_annotated.png', bbox_inches='tight')
     # plt.show()
 
 

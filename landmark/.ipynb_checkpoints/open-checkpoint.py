@@ -7,36 +7,32 @@ mp_face_mesh = mp.solutions.face_mesh
 face_mesh = mp_face_mesh.FaceMesh()
 
 # Your specific landmark points
-landmark_indices =[21, 37, 40, 41, 48, 49, 50, 51, 60, 61, 65, 74, 76, 80, 93, 98, 99, 100, 101, 102, 103, 116, 118, 119, 120, 124, 127, 130, 132, 138, 143, 148, 166, 167, 168, 178, 187, 188, 199, 204, 206, 207, 208, 210, 214, 217, 219, 220, 221, 236, 238, 239, 240, 241, 242, 243, 292, 293, 307, 308, 309, 324, 325, 326, 362, 367, 402, 416, 448, 455]
-# Capture video or use an image
-cap = cv2.VideoCapture(0)  # Or provide a path to an image
+landmark_indices = [22, 55, 94, 104, 292, 293, 307, 309, 324, 346, 353, 367, 376, 408, 409, 410, 416, 448, 455]
+# Read the image file
+image_path = 'iim_sample_nut.jpg'  # Provide the path to your image
+image = cv2.imread(image_path)
 
-while cap.isOpened():
-    ret, frame = cap.read()
-    if not ret:
-        break
+# Convert BGR image to RGB for processing
+image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+result = face_mesh.process(image_rgb)
 
-    # Convert BGR image to RGB for processing
-    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    result = face_mesh.process(frame_rgb)
+if result.multi_face_landmarks:
+    for face_landmarks in result.multi_face_landmarks:
+        for idx in landmark_indices:
+            h, w, _ = image.shape
 
-    if result.multi_face_landmarks:
-        for face_landmarks in result.multi_face_landmarks:
-            for idx in landmark_indices:
-                h, w, _ = frame.shape
+            # Get the position of the landmark
+            lm = face_landmarks.landmark[idx-1]
+            x, y = int(lm.x * w), int(lm.y * h)
 
-                # Get the position of the landmark
-                lm = face_landmarks.landmark[idx]
-                x, y = int(lm.x * w), int(lm.y * h)
+            # Color the landmark point (e.g., red)
+            cv2.circle(image, (x, y), 5, (0, 0, 255), -1)
 
-                # Color the landmark point (e.g., red)
-                cv2.circle(frame, (x, y), 5, (0, 0, 255), -1)
+# Save the image with colored landmarks
+output_path = 'nimstim_single_hpy.jpg'  # Specify the output path
+cv2.imwrite(output_path, image)
 
-    # Display the image
-    cv2.imshow('Face with Colored Landmarks', frame)
-
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-cap.release()
+# Optionally display the image
+cv2.imshow('Face with Colored Landmarks', image)
+cv2.waitKey(0)  # Wait indefinitely until a key is pressed
 cv2.destroyAllWindows()

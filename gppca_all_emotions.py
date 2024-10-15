@@ -11,7 +11,7 @@ def preprocess_data(data,emotions):
         data : Dictionary of dataframes
         emotions : List of emotions to preprocess the data [ANG,SAD,FER,SUR]
     '''
-    preprocessed_data = {'ANG':{},'SAD':{},'FER':{},'SUR':{}}
+    preprocessed_data = {'ANG':{},'SAD':{},'FER':{},'SUR':{},'HPY':{}}
     ## Preprocessing the data as per given emotion [ANG,SAD,FER,SUR]
     for emotion in emotions:
         
@@ -32,16 +32,16 @@ def preprocess_data(data,emotions):
 
 def main():
     # Loading all the data in pandas dataframes
-    ckplus = pd.read_csv("au_dataset/results_ckplus.csv")
-    iim = pd.read_csv("au_dataset/results_iim.csv")
-    jaffe = pd.read_csv("au_dataset/results_jaffe.csv")
-    nimstim = pd.read_csv("au_dataset/results_nimstim.csv")
-    radboud = pd.read_csv("au_dataset/results_radboud.csv")
+    # ckplus = pd.read_csv("au_dataset/results_ckplus.csv")
+    iim = pd.read_csv("landmark_dataset/results_iim.csv")
+    # jaffe = pd.read_csv("landmark_dataset/results_jaffe.csv")
+    nimstim = pd.read_csv("landmark_dataset/results_nimstim.csv")
+    # radboud = pd.read_csv("au_dataset/results_radboud.csv")
     
 
     # Preprocessing the data
-    emotions = ["ANG","SAD","FER","SUR"]
-    allData = {"ckplus":ckplus,"iim":iim,"jaffe":jaffe,"nimstim":nimstim,"radboud":radboud} ### Need to parameter to fiddle this, maybe add or delete few datasets
+    emotions = ["ANG","HPY","SAD","FER","SUR"]
+    allData = {"iim":iim,"nimstim":nimstim} ### Need to parameter to fiddle this, maybe add or delete few datasets
     # print([x for x in allData["ckplus"]['filename'].str.endswith("ANG.csv") if x==True])
 
     preprocessedData = preprocess_data(allData,emotions)
@@ -58,9 +58,9 @@ def main():
         rotated_loadings, _ = rotate_factors(loadings.T, 'varimax')
     
         # print(rotated_loadings.shape)
-        plotHeatMap(rotated_loadings,ckplus.columns[:-1],emotion,'all','all')
-        getRowsWithExtremeValues(rotated_loadings, ckplus.columns[:-1], threshold)
-        plotHeatMapWithRowAnnotations(rotated_loadings, ckplus.columns[:-1], emotion, 'single', 'all', threshold)
+        plotHeatMap(rotated_loadings,iim.columns[:-1],emotion,'all','all')
+        getRowsWithExtremeValues(rotated_loadings, iim.columns[:-1], threshold)
+        plotHeatMapWithRowAnnotations(rotated_loadings, iim.columns[:-1], emotion, 'single', 'all', threshold)
 
         
 if __name__ == "__main__":
