@@ -19,7 +19,7 @@ def GeneralizedPPCA(all_data):
     #    ' AU09_r', ' AU10_r', ' AU12_r', ' AU14_r', ' AU15_r', ' AU17_r',
     #    ' AU20_r', ' AU23_r', ' AU25_r', ' AU26_r', ' AU45_r']
 
-    action_units = [i for i in range(1,469)]
+    action_units = [i for i in range(0,469)]
     for key in all_data.keys():
         d = all_data[key]
         assert np.isnan(d).sum() == 0
@@ -184,15 +184,18 @@ def plotGaussianCurve(data_map, au):
     
 def getRowsWithExtremeValues(rotated_loadings, columns, threshold=0.5):
     extreme_rows = []
+    print("*"*10)
     for i, row in enumerate(rotated_loadings):
         extreme_values = [(val, idx) for idx, val in enumerate(row) if val > threshold or val < -threshold]
+        
         if extreme_values:
-            print(f"{columns[i]} : ",end="")
-            for val, idx in extreme_values:
-                print(f"{val:.2f}",end=', ')
-            print()
+
+            # print(f"{columns[i]},",end="")
             extreme_rows.append(columns[i])
+        
+        
     print([int(x) for x in extreme_rows])
+    print("*"*10)
     return extreme_rows
 
 def plotHeatMapWithRowAnnotations(rotated_loadings, columns, emotion, dataset_flag, dataset, threshold=0.5):
