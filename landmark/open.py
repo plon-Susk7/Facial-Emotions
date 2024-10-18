@@ -9,7 +9,7 @@ face_mesh = mp_face_mesh.FaceMesh()
 # Your specific landmark points
 # landmark_indices = [1,168,205,425,10,190,414,162,389,152]
 
-landmark_indices = [133,463,6,1,162,389,130,359]
+landmark_indices = [33, 59, 136, 137, 139, 141, 149, 150, 151, 153, 170, 171, 172, 173, 176, 177, 195, 200, 201, 202, 205, 209, 211, 212, 263, 289, 365, 366, 368, 370, 378, 379, 380, 395, 396, 397, 398, 401, 419, 422, 425, 429, 431, 432]
 image_path = 'iim_nut.jpg'  # Provide the path to your image
 image = cv2.imread(image_path)
 

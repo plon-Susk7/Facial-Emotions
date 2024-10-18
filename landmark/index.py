@@ -44,10 +44,12 @@ if __name__ == '__main__':
         for pair in result:
             temp = [] # We'll store the displacement here!
             pointsA = getLandmarkPoints(pair[0])
+            _,points = affine_trans(np.array(pointsA))
+            _,b1 = similarity_trans(points)
 
-            a1,b1 = affine_trans(np.array(pointsA))
             pointsB = getLandmarkPoints(pair[1])
-            a2,b2 = affine_trans(np.array(pointsB))
+            _,points = affine_trans(np.array(pointsB))
+            _,b2 = similarity_trans(points)
 
             for i in range(len(b1)):
                 temp.append(((b1[i][0]-b2[i][0])**2 + (b1[i][1]-b2[i][1])**2)**0.5)

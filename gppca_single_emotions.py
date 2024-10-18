@@ -86,7 +86,7 @@ def main():
     iim_path = 'landmark/landmark_distance_csvs/iim/'
 
     emotions = ["HPY", "ANG", "SAD", "FER", "SUR"]
-    threshold = 0.05
+    threshold = 0.08
     variance_explained = 0.95
 
     for emotion in emotions:
