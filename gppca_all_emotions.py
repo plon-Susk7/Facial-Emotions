@@ -33,15 +33,15 @@ def preprocess_data(data,emotions):
 def main():
     # Loading all the data in pandas dataframes
     # ckplus = pd.read_csv("au_dataset/results_ckplus.csv")
-    iim = pd.read_csv("landmark_dataset/results_iim.csv")
+    iim = pd.read_csv("./landmark/landmark_distance_csvs/radboud/ANG.csv")
     # jaffe = pd.read_csv("landmark_dataset/results_jaffe.csv")
-    nimstim = pd.read_csv("landmark_dataset/results_nimstim.csv")
+    jaffe = pd.read_csv("./landmark/landmark_distance_csvs/iim/ANG.csv")
     # radboud = pd.read_csv("au_dataset/results_radboud.csv")
     
 
     # Preprocessing the data
     emotions = ["ANG","HPY","SAD","FER","SUR"]
-    allData = {"iim":iim,"nimstim":nimstim} ### Need to parameter to fiddle this, maybe add or delete few datasets
+    allData = {"iim":iim,"jaffe":jaffe} ### Need to parameter to fiddle this, maybe add or delete few datasets
     # print([x for x in allData["ckplus"]['filename'].str.endswith("ANG.csv") if x==True])
 
     preprocessedData = preprocess_data(allData,emotions)
