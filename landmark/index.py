@@ -3,28 +3,15 @@ import os
 import numpy as np
 import pandas as pd
 
-'''
-    # 162 -> 300,900
-    # 190 -> 600,1000
-    414 -> 800,1000
-    # 168 -> 700,900
-    # 10 -> 700, 1300
-    # 1 -> 700, 600
-    205 -> 500, 600
-    425 -> 900, 600
-    # 152 -> 500. 100
-'''
-
-
 if __name__ == '__main__':
 
-    first_path = './data/iim/NUT' #NUT
+    first_path = './data/radboud/NUT' #NUT
 
     first_dataset = os.listdir(first_path)
     emotions=["ANG","FER","HPY","SAD","SUR"]
 
     for emotion in emotions:
-        second_path = "./data/iim/"+emotion
+        second_path = "./data/radboud/"+emotion
         second_dataset = os.listdir(second_path)
         result = []
 
@@ -32,7 +19,7 @@ if __name__ == '__main__':
         # We'll create pairs of images from the two datasets
         for path in first_dataset:
             for path2 in second_dataset:
-                if path.split('.')[0][0:-3] == path2.split('.')[0][0:-3]:
+                if f"{path.split('_')[0]}_{path.split('_')[1]}" == f"{path2.split('_')[0]}_{path2.split('_')[1]}":
                     result.append((os.path.join(first_path,path),os.path.join(second_path,path2)))
 
             if(len(result)==len(second_dataset)):
@@ -58,5 +45,5 @@ if __name__ == '__main__':
         
         
         df = pd.DataFrame(columns=range(1,469),data=final)
-        path_to_save=f"./landmark_distance_csvs/iim/{emotion}.csv"
+        path_to_save=f"./landmark_distance_csvs/radboud/{emotion}.csv"
         df.to_csv(path_to_save,index=False)
