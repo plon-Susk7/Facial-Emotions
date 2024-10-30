@@ -8,3 +8,4 @@ landmark/nimstim_emotionFolder
 landmark/Radboud_images
 landmark/__pycache__/
 dataset/data
+__pycache__

@@ -7,6 +7,9 @@ from sklearn.preprocessing import StandardScaler
 import os
 
 def main():
+
+    # Add path here!
+
     iim_path = 'landmark/landmark_distance_csvs/radboud/'
 
     emotions = ["HPY", "ANG", "SAD", "FER", "SUR"]
@@ -27,7 +30,6 @@ def main():
         w = pca.components_.T  # Transpose to get features x components
         
         v = pca.explained_variance_ratio_ 
-        print(w)
         loadings = getLoadings(w,v,variance_explained)
         # Get loadings (components) and explained variance
         # loadings = pca.components_.T
