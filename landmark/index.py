@@ -2,16 +2,27 @@ from helper import *
 import os
 import numpy as np
 import pandas as pd
+import argparse
 
-if __name__ == '__main__':
+def getLandmarkPoints(dataset):
+    '''
+        Function to get displacemnet of landmark points in given dataset
+        
+        Args:
+            dataset : Path to the dataset
 
-    first_path = './data/radboud/NUT' #NUT
+        Returns:
+            Nothing.
+            Saves the csv file in the landmark_distance_csvs folder
+    '''
+
+    first_path = f'./data/{dataset}/NUT' #NUT
 
     first_dataset = os.listdir(first_path)
     emotions=["ANG","FER","HPY","SAD","SUR"]
 
     for emotion in emotions:
-        second_path = "./data/radboud/"+emotion
+        second_path = f"./data/{dataset}/{emotion}"
         second_dataset = os.listdir(second_path)
         result = []
 
@@ -45,5 +56,15 @@ if __name__ == '__main__':
         
         
         df = pd.DataFrame(columns=range(1,469),data=final)
-        path_to_save=f"./landmark_distance_csvs/radboud/{emotion}.csv"
+        path_to_save=f"./landmark_distance_csvs/{dataset}/{emotion}.csv"
         df.to_csv(path_to_save,index=False)
+
+
+if __name__ == "__main__":
+
+    # python index.py <dataset_name>
+    parser = argparse.ArgumentParser(description="Process landmark points distance")
+    parser.add_argument("dataset",type=str,help="Dataset to process")
+
+    args = parser.parse_args()
+    getLandmarkPoints(args.dataset)
