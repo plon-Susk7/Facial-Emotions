@@ -57,12 +57,13 @@ def getLandmarkPoint(dataset):
 
             for i in range(len(b1)):
                 # temp.append(((b1[i][0]-b2[i][0])**2 + (b1[i][1]-b2[i][1])**2)**0.5)
-                temp.append([(b1[i][0]-b2[i][0]),(b1[i][1]-b2[i][1])])
+                temp.append(b1[i][0]-b2[i][0])
+                temp.append(b1[i][1]-b2[i][1])
             
             final.append(temp)
         
         
-        df = pd.DataFrame(columns=range(1,469),data=final)
+        df = pd.DataFrame(columns=range(1,469*2-1),data=final)
         path_to_save=f"./landmark_differences_csvs/{dataset}/{emotion}.csv"
         df.to_csv(path_to_save,index=False)
 
