@@ -11,14 +11,17 @@ face_mesh = mp_face_mesh.FaceMesh()
 
 ##### 1 index
 
-landmark_indices = [22, 38, 66, 88, 118, 168, 214, 220, 266, 272, 274, 278, 282, 298, 300, 302, 306, 340, 342, 344, 346, 352, 354, 366, 386, 390, 400, 402, 404, 406, 410, 418, 422, 424, 426, 430, 432, 526, 548, 578, 628, 672, 678, 724, 730, 732, 736, 740, 756, 758, 760, 790, 792, 794, 796, 802, 814, 834, 838, 844, 846, 850, 858, 862, 864, 866, 870, 872]
+landmark_indices = [38, 66, 88, 118, 168, 214, 272, 274, 278, 282, 298, 300, 302, 306, 340, 342, 344, 346, 352, 354, 366, 390, 400, 402, 404, 406, 410, 418, 422, 424, 430, 432, 526, 578, 628, 672, 730, 732, 736, 740, 756, 758, 760, 790, 792, 794, 796, 802, 814, 838, 844, 846, 850, 858, 862, 864, 872]
 def process_landmark_indices(landmark_indices):
     '''
         Function to process landmark indices
     '''
     new_landmark_indices = []
     for i in landmark_indices:
-        new_landmark_indices.append(i//2)
+        if i%2==0:
+            new_landmark_indices.append(i//2)
+        else:
+            new_landmark_indices.append(i//2 + 1)
 
     new_landmark_indices = list(set(new_landmark_indices))
     return new_landmark_indices
