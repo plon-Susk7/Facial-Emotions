@@ -3,14 +3,14 @@ import pandas as pd
 import numpy as np
 from statsmodels.multivariate.factor_rotation import rotate_factors
 from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import MinMaxScaler
 import os
 
 def main():
 
     # Add path here!
 
-    iim_path = 'landmark/landmark_distance_csvs/radboud/'
+    iim_path = 'landmark/landmark_differences_csvs/radboud/'
 
     emotions = ["HPY", "ANG", "SAD", "FER", "SUR"]
     threshold = 0.065
@@ -20,6 +20,10 @@ def main():
         extreme_rows_per_dataset = {}
         iim_path_emotion = f"{iim_path}{emotion}.csv"
         df1 = pd.read_csv(iim_path_emotion)
+
+        # scaler = MinMaxScaler()
+
+        # df1 = pd.DataFrame(scaler.fit_transform(df1), columns=df1.columns)
         
         # scaler = StandardScaler()
         # df1_scaled = scaler.fit_transform(df1)

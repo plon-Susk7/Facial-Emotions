@@ -36,7 +36,7 @@ def getLandmarkPoint(dataset):
             for path2 in second_dataset:
 
                 
-                if f"{path.split('_')[0]}_{path.split('_')[1]}" == f"{path2.split('_')[0]}_{path2.split('_')[1]}":
+                if f"{path.split('_')[0]}" == f"{path2.split('_')[0]}":
                     result.append((os.path.join(first_path,path),os.path.join(second_path,path2)))
 
             if(len(result)==len(second_dataset)):
@@ -64,6 +64,9 @@ def getLandmarkPoint(dataset):
         
         
         df = pd.DataFrame(columns=range(1,469*2-1),data=final)
+
+        if os.path.exists(f"./landmark_differences_csvs/{dataset}") == False:
+            os.makedirs(f"./landmark_differences_csvs/{dataset}")
         path_to_save=f"./landmark_differences_csvs/{dataset}/{emotion}.csv"
         df.to_csv(path_to_save,index=False)
 

@@ -76,6 +76,11 @@ def getLandmarkPoints(image_path):
     face_mesh = mp_face_mesh.FaceMesh(static_image_mode=True)
     results = []
     # Load image
+    if not os.path.exists(image_path):
+        print(f"Image not found at {image_path}")
+    else:
+        print(f"Processing {image_path}")
+        
     image = cv2.imread(image_path)
 
     # Convert the image to RGB
@@ -84,6 +89,7 @@ def getLandmarkPoints(image_path):
     # Process the image and get the landmarks
     result = face_mesh.process(image_rgb)
 
+    h, w, _ = image.shape
     # Check if landmarks were detected
     if result.multi_face_landmarks:
         
