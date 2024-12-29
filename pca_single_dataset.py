@@ -10,10 +10,10 @@ def main():
 
     # Add path here!
 
-    iim_path = 'landmark/landmark_differences_csvs/radboud/'
+    iim_path = 'landmark/landmark_differences_csvs/iim/'
 
     emotions = ["HPY", "ANG", "SAD", "FER", "SUR"]
-    threshold = 0.065
+    threshold = 0.05
     variance_explained = 0.95
 
     for emotion in emotions:
@@ -42,14 +42,14 @@ def main():
         rotated_loadings, _ = rotate_factors(loadings.T, 'varimax')
         
         # Plot heatmap of rotated loadings
-        plotHeatMap(rotated_loadings, df1.columns, emotion, 'single', 'iim')
+        plotHeatMap(rotated_loadings, df1.columns, emotion, 'single', 'jaffe')
         
         # Identify rows with extreme values
         extreme_rows = getRowsWithExtremeValues(rotated_loadings, df1.columns, threshold)
-        extreme_rows_per_dataset['iim'] = set(extreme_rows)
+        extreme_rows_per_dataset['jaffe'] = set(extreme_rows)
         
         # Plot heatmap with row annotations
-        plotHeatMapWithRowAnnotations(rotated_loadings, df1.columns, emotion, 'single', 'iim', threshold)
+        plotHeatMapWithRowAnnotations(rotated_loadings, df1.columns, emotion, 'single', 'jaffe', threshold)
 
 if __name__ == "__main__":
     main()

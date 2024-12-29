@@ -9,3 +9,7 @@ landmark/Radboud_images
 landmark/__pycache__/
 dataset/data
 __pycache__
+AULP/new_dataset/
+AULP/.ipynb_checkpoints/
+AULP/__pycache__/
+AULP/dataset/
